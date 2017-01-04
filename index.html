@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.min.css">
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="columns">
+            <div class="content-placeholder"></div>
+        </div> <!-- /.columns -->
+    </div> <!-- /.row -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/js/foundation.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+    
+    <!-- Init Foundation Call -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(document).foundation();
+        });
+    </script>
+
+    <!-- REST API CALL FROM - https://reqres.in/ - Test your front-end against a real API - Grab the data. Cross Domain Call. -->
+    <script type="text/javascript">
+        $.ajax({
+            url: "https://reqres.in/api/users",
+            type: "GET",
+            data: JSON,
+            success: function(response) {
+                console.log(response);
+                
+                /* Handlebars Template */
+                var source   = $("#entry-template").html(); // Grab the template script
+                var template = Handlebars.compile(source); // Compile the template
+                var theCompiledHtml = template(response); // Pass our data to the template
+                $('.content-placeholder').html(theCompiledHtml); // Add the compiled html to the page
+            }
+        });
+    </script>
+    
+    <!-- Handlebars template -->
+    <script id="entry-template" type="text/x-handlebars-template">
+        {{#each data}}
+            <div class="entry">
+                <h1>{{first_name}} {{last_name}}</h1>
+                <img src="{{avatar}}" alt="avatar" />
+            </div>
+        {{/each}}
+    </script>
+    
+    <!-- On Document Ready -->
+    <script>
+        $(document).ready(function() {
+            
+        });
+    </script>
+</body>
+
+</html>
